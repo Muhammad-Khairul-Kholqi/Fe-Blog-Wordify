@@ -89,7 +89,7 @@
       icon: User
     },
     {
-      name: 'Blog',
+      name: 'Popular',
       path: '/blog',
       icon: BookOpen
     },

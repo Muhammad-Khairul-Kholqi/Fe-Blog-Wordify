@@ -41,40 +41,23 @@
                 v-motion="animation.createDelayedAnimation(animation.slideUp, 1000)"
                 class="mt-6 sm:mt-8 lg:mt-10 flex justify-center"
             >
-                <div class="w-full max-w-[600px] px-4">
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-3 items-center justify-center">
-                        <RouterLink 
-                            v-motion="{ ...animation.rightToLeft, ...animation.hoverScale }"
-                            to="" 
-                            class="w-full sm:w-auto sm:max-w-[40%] border border-gray-200 py-2 px-5 rounded-full flex items-center justify-center gap-2 group"
-                        >
-                            <span class="text-sm sm:text-base">Start reading</span>
-                            <div class="flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700 h-8 w-8 rounded-full overflow-hidden relative">
-                                <ArrowUpRight class="w-5 h-5 text-white transform transition-all duration-300 group-hover:translate-x-2 group-hover:-translate-y-2 group-hover:opacity-0" />
-                                <ArrowUpRight class="w-5 h-5 text-white absolute transform translate-x-[-10px] translate-y-[10px] opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
-                            </div>
-                        </RouterLink>
-
-                        <div 
-                            v-motion="{ ...animation.leftToRight, ...animation.hoverGlow }"
-                            class="w-full sm:max-w-[60%] border border-gray-200 px-4 sm:px-5 py-3 rounded-full flex items-center gap-2"
-                        >
-                            <Search 
-                                v-motion="animation.rotateEntry"
-                                class="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" 
-                            />
-                            <input 
-                                v-motion="animation.fadeEntry"
-                                type="text"
-                                class="w-full outline-none text-sm sm:text-base"
-                                placeholder="Search blog"
-                            >
+                <div class="flex justify-center">
+                    <RouterLink 
+                        v-motion="{ ...animation.rightToLeft, ...animation.hoverScale }"
+                        to="/blog" 
+                        class="border border-gray-200 py-2 px-5 rounded-full flex items-center justify-center gap-2 group"
+                    >
+                        <span class="text-sm sm:text-base">Start reading</span>
+                        <div class="flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700 h-8 w-8 rounded-full overflow-hidden relative">
+                            <ArrowUpRight class="w-5 h-5 text-white transform transition-all duration-300 group-hover:translate-x-2 group-hover:-translate-y-2 group-hover:opacity-0" />
+                            <ArrowUpRight class="w-5 h-5 text-white absolute transform translate-x-[-10px] translate-y-[10px] opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
                         </div>
-                    </div>
+                    </RouterLink>
                 </div>
             </div>
 
             <div 
+                ref="statsRef"
                 v-motion="animation.createDelayedAnimation(animation.slideUp, 1800)"
                 class="mt-8 sm:mt-10 flex justify-center"
             >
@@ -82,17 +65,16 @@
                     <div 
                         v-for="(stat, index) in statistics" 
                         :key="stat.label"
-                        v-motion="{ ...animation.createStatAnimation(index).container, ...animation.hoverLift }"
+                        v-motion="{ ...animation.createDelayedAnimation(animation.slideUp, 1800 + (index * 150)), ...animation.hoverLift }"
                         class="text-center cursor-default"
                     >
                         <h3 
-                            v-motion="animation.createStatAnimation(index).number"
                             class="font-semibold text-5xl sm:text-5xl text-gray-900"
                         >
-                            {{ stat.value }}
+                            {{ stat.displayValue }}
                         </h3>
                         <h4 
-                            v-motion="animation.createStatAnimation(index).label"
+                            v-motion="animation.createDelayedAnimation(animation.slideUp, 2200 + (index * 150))"
                             class="text-xs sm:text-sm text-gray-600 mt-1 tracking-wider"
                         >
                             {{ stat.label }}
@@ -102,7 +84,7 @@
             </div>
 
             <div 
-                v-motion="animation.createDelayedAnimation(animation.bottomToTopDelayed, 2500)"
+                v-motion="animation.createDelayedAnimation(animation.bottomToTopDelayed, 2000)"
                 class="flex justify-center mt-10"
             >
                 <Mouse class="w-8 h-8 text-gray-500 animate-bounce" />
@@ -114,22 +96,92 @@
 <script setup>
     import { ArrowUpRight, Search, Mouse } from "lucide-vue-next";
     import { RouterLink } from "vue-router";
-    import { ref } from "vue";
+    import { ref, onMounted, onUnmounted } from "vue";
     import * as animation from '../../molecules/animation'; 
     import MainLogo from "../../../assets/mainLogo.png"
 
+    const statsRef = ref(null)
+
     const statistics = ref([
         {
-            value: "75",
+            value: 75,
+            targetValue: "75",
+            displayValue: "0",
             label: "BLOGS"
         },
         {
-            value: "100K",
+            value: 100000,
+            targetValue: "100K",
+            displayValue: "0",
             label: "LIKES"
         },
         {
-            value: "25",
+            value: 25,
+            targetValue: "25",
+            displayValue: "0",
             label: "CATEGORIES"
         }
     ]);
+
+    const animateCounter = (stat, index) => {
+        const duration = 2000 
+        const delay = 500
+        const startTime = Date.now() + delay
+        
+        const animate = () => {
+            const now = Date.now()
+            if (now < startTime) {
+                requestAnimationFrame(animate)
+                return
+            }
+            
+            const elapsed = now - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            
+            const easedProgress = 1 - Math.pow(1 - progress, 3)
+            
+            const currentValue = Math.floor(stat.value * easedProgress)
+            
+            if (stat.targetValue.includes('K')) {
+                stat.displayValue = currentValue >= 1000 ? Math.floor(currentValue/1000) + 'K' : currentValue.toString()
+            } else {
+                stat.displayValue = currentValue.toString()
+            }
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate)
+            } else {
+                stat.displayValue = stat.targetValue 
+            }
+        }
+        
+        requestAnimationFrame(animate)
+    }
+
+    let observer = null
+
+    onMounted(() => {
+        if (statsRef.value) {
+            observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            statistics.value.forEach((stat, index) => {
+                                animateCounter(stat, index)
+                            })
+                            observer.disconnect() 
+                        }
+                    })
+                },
+                { threshold: 0.5 }
+            )
+            observer.observe(statsRef.value)
+        }
+    })
+
+    onUnmounted(() => {
+        if (observer) {
+            observer.disconnect()
+        }
+    })
 </script>

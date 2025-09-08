@@ -5,6 +5,7 @@ import {
 import LandingLayout from "../layouts/LandingLayout.vue"
 
 import Home from "../views/Home.vue"
+import Blog from "../views/Blog.vue"
 
 const routes = [{
     path: "/",
@@ -13,6 +14,10 @@ const routes = [{
             path: "",
             component: Home
         },
+        {
+            path: "blog",
+            component: Blog
+        }
     ]
 }]
 

@@ -7,7 +7,7 @@
                     class="w-full lg:w-1/2 order-2 lg:order-1"
                 >
                     <img 
-                        v-motion="animation.createDelayedAnimation(animation.scaleIn, 400)"
+                        v-motion="animation.createDelayedAnimation(animation.scaleIn, 700)"
                         :src="AboutIllustration"
                         alt="About Illustration"
                         class="w-full max-w-[500px] lg:max-w-[600px] mx-auto"
@@ -33,7 +33,7 @@
                     
                     <p 
                         v-motion="animation.createDelayedAnimation(animation.slideUp, 1000)"
-                        class="text-gray-600 text-sm sm:text-base leading-relaxed px-2 lg:px-0"
+                        class="text-gray-700 text-sm sm:text-base leading-relaxed px-2 lg:px-0"
                     >
                         Wordify is a blog that brings together writings from a wide range of topics — 
                         from practical tips and everyday experiences to creative inspiration. 
@@ -47,8 +47,8 @@
                     >
                         <RouterLink 
                             v-motion="{ ...animation.createDelayedAnimation(animation.scaleIn, 1400), ...animation.hoverScale }"
-                            to=""
-                            class="bg-gradient-to-r from-purple-500 to-purple-700 px-6 py-3 rounded-md text-white inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25"
+                            to="/blog"
+                            class="bg-gradient-to-r from-purple-500 to-purple-700 px-5 py-2 rounded-md text-white inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/25"
                         >
                             <span class="text-center font-medium">Get started</span>
                         </RouterLink>
