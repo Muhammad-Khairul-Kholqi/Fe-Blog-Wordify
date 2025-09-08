@@ -4,7 +4,12 @@ import {
 import './styles/style.css'
 import App from './App.vue'
 import router from './routes/index.js'
+import {
+    MotionPlugin
+} from '@vueuse/motion'
 
-createApp(App)
-    .use(router) 
-    .mount('#app')
+const app = createApp(App)
+
+app.use(router)
+app.use(MotionPlugin)
+app.mount('#app')
