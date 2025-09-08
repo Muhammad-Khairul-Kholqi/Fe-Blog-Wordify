@@ -3,8 +3,8 @@ import {
 } from 'vue'
 import './styles/style.css'
 import App from './App.vue'
-import router from './routes/index.js' // tambahkan import router
+import router from './routes/index.js'
 
 createApp(App)
-    .use(router) // gunakan router
+    .use(router) 
     .mount('#app')

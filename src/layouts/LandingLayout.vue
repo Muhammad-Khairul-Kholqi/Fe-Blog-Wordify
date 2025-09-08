@@ -1,12 +1,12 @@
 <template>
   <div>
     <Navbar />
-    <main class="p-4">
+    <main class="mt-[80px]">
       <router-view />
     </main>
   </div>
 </template>
 
 <script setup>
-import Navbar from "../components/Navbar.vue"
+  import Navbar from "../components/global/Navbar.vue"
 </script>

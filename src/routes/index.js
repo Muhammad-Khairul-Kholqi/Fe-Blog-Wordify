@@ -4,14 +4,14 @@ import {
 } from "vue-router"
 import LandingLayout from "../layouts/LandingLayout.vue"
 
-import App from "../App.vue"
+import Home from "../views/Home.vue"
 
 const routes = [{
     path: "/",
     component: LandingLayout,
     children: [{
             path: "",
-            component: App
+            component: Home
         },
     ]
 }]

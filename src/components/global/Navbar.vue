@@ -1,6 +1,6 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50">
-    <div class="flex justify-center p-5 bg-white border-b border-gray-200">
+    <div class="flex justify-center p-5 border-b border-gray-200">
       <div class="w-full max-w-[1300px]">
         <div class="flex items-center justify-between">
           <RouterLink to="/" class="tracking-wider font-semibold">
@@ -22,7 +22,7 @@
             @click="toggleMobileMenu"
             class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors z-50 relative"
           >
-            <Menu v-if="!isMobileMenuOpen" :size="24" />
+            <Menu v-if="!isMobileMenuOpen" :size="25" />
             <X v-else :size="24" />
           </button>
         </div>
@@ -71,7 +71,6 @@ import { Menu, X, Home, User, BookOpen, Mail } from 'lucide-vue-next'
 
 const isMobileMenuOpen = ref(false)
 
-// Array navigasi items
 const navItems = ref([
   {
     name: 'Home',
