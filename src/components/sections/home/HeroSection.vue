@@ -1,20 +1,34 @@
 <template>
-    <div class="flex justify-center px-4 sm:px-5 py-6 sm:py-10">
+    <div class="flex justify-center p-5">
         <div class="w-full max-w-[1300px]">
-            <div class="text-center">
+            <div class="flex justify-center">
+                <div class="flex items-center gap-2">
+                    <img 
+                        v-motion="animation.createDelayedAnimation(animation.slideLeft, 100)"
+                        :src="MainLogo"
+                        alt="Logo Wordify"
+                        class="w-[40px]"
+                    >
+                    <span 
+                        v-motion="animation.createDelayedAnimation(animation.slideRight, 100)"
+                        class="font-semibold tracking-wide"
+                    >
+                        WORDIFY
+                    </span>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
                 <h1 
-                    v-motion="animation.presets.hero.title"
+                    v-motion="animation.bottomToTop"
                     class="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight"
                 >
                     Find Inspiration from <br class="hidden sm:block">
-                    Various <span 
-                        v-motion="animation.presets.hero.subtitle"
-                        class="bg-gradient-to-r from-purple-400 to-purple-500 bg-clip-text text-transparent font-bold"
-                    >Interesting Topics</span>
+                    Various <span v-motion="animation.centerScale" class="bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent font-bold">Interesting Topics</span>
                 </h1>
                 
                 <div 
-                    v-motion="animation.presets.hero.description"
+                    v-motion="animation.bottomToTopDelayed"
                     class="flex justify-center mt-4 sm:mt-5"
                 >
                     <p class="text-center w-full max-w-[700px] text-sm sm:text-base text-gray-600 px-4">
@@ -28,29 +42,29 @@
                 class="mt-6 sm:mt-8 lg:mt-10 flex justify-center"
             >
                 <div class="w-full max-w-[600px] px-4">
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-5 items-center justify-center">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-3 items-center justify-center">
                         <RouterLink 
-                            v-motion="animation.presets.hero.cta"
+                            v-motion="{ ...animation.rightToLeft, ...animation.hoverScale }"
                             to="" 
-                            class="w-full sm:w-auto sm:max-w-[40%] border border-gray-200 py-2 px-5 rounded-full flex items-center justify-center gap-2 group hover:border-purple-300 hover:bg-purple-50 transition-all duration-300"
+                            class="w-full sm:w-auto sm:max-w-[40%] border border-gray-200 py-2 px-5 rounded-full flex items-center justify-center gap-2 group"
                         >
                             <span class="text-sm sm:text-base">Start reading</span>
-                            <div class="flex items-center justify-center bg-purple-500 h-8 w-8 rounded-full overflow-hidden relative">
+                            <div class="flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700 h-8 w-8 rounded-full overflow-hidden relative">
                                 <ArrowUpRight class="w-5 h-5 text-white transform transition-all duration-300 group-hover:translate-x-2 group-hover:-translate-y-2 group-hover:opacity-0" />
                                 <ArrowUpRight class="w-5 h-5 text-white absolute transform translate-x-[-10px] translate-y-[10px] opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
                             </div>
                         </RouterLink>
 
                         <div 
-                            v-motion="animation.presets.hero.search"
-                            class="w-full sm:max-w-[60%] border border-gray-200 px-4 sm:px-5 py-2 rounded-full flex items-center gap-2 hover:border-purple-300 hover:shadow-sm transition-all duration-300"
+                            v-motion="{ ...animation.leftToRight, ...animation.hoverGlow }"
+                            class="w-full sm:max-w-[60%] border border-gray-200 px-4 sm:px-5 py-3 rounded-full flex items-center gap-2"
                         >
                             <Search 
-                                v-motion="animation.presets.hero.searchIcon"
+                                v-motion="animation.rotateEntry"
                                 class="text-gray-400 w-4 h-4 sm:w-5 sm:h-5" 
                             />
                             <input 
-                                v-motion="animation.presets.hero.searchInput"
+                                v-motion="animation.fadeEntry"
                                 type="text"
                                 class="w-full outline-none text-sm sm:text-base"
                                 placeholder="Search blog"
@@ -86,28 +100,36 @@
                     </div>
                 </div>
             </div>
+
+            <div 
+                v-motion="animation.createDelayedAnimation(animation.bottomToTopDelayed, 2500)"
+                class="flex justify-center mt-10"
+            >
+                <Mouse class="w-8 h-8 text-gray-500 animate-bounce" />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ArrowUpRight, Search } from "lucide-vue-next";
-import { RouterLink } from "vue-router";
-import { ref } from "vue";
-import * as animation from '../../molecules/animation'; 
+    import { ArrowUpRight, Search, Mouse } from "lucide-vue-next";
+    import { RouterLink } from "vue-router";
+    import { ref } from "vue";
+    import * as animation from '../../molecules/animation'; 
+    import MainLogo from "../../../assets/mainLogo.png"
 
-const statistics = ref([
-    {
-        value: "75",
-        label: "BLOGS"
-    },
-    {
-        value: "4.5",
-        label: "RATINGS"
-    },
-    {
-        value: "25",
-        label: "CATEGORIES"
-    }
-]);
+    const statistics = ref([
+        {
+            value: "75",
+            label: "BLOGS"
+        },
+        {
+            value: "100K",
+            label: "LIKES"
+        },
+        {
+            value: "25",
+            label: "CATEGORIES"
+        }
+    ]);
 </script>

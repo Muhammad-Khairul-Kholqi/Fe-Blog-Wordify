@@ -215,18 +215,18 @@ export const springScale = {
     }
 }
 
-export const heroTitle = createDelayedAnimation(slideUp, 200)
-export const heroSubtitle = createDelayedAnimation(scaleIn, 600)
-export const heroDescription = createDelayedAnimation(slideUp, 800)
-export const heroCTA = createDelayedAnimation(slideLeft, 1200)
-export const heroSearch = createDelayedAnimation(slideRight, 1400)
-export const heroSearchIcon = createDelayedAnimation(rotateIn, 1600)
-export const heroSearchInput = createDelayedAnimation(fadeIn, 1700)
+export const bottomToTop = createDelayedAnimation(slideUp, 200)
+export const centerScale = createDelayedAnimation(scaleIn, 600)
+export const bottomToTopDelayed = createDelayedAnimation(slideUp, 800)
+export const rightToLeft = createDelayedAnimation(slideLeft, 1200)
+export const leftToRight = createDelayedAnimation(slideRight, 1400)
+export const rotateEntry = createDelayedAnimation(rotateIn, 1600)
+export const fadeEntry = createDelayedAnimation(fadeIn, 1700)
 
-export const createStatAnimation = (index) => ({
-    container: createDelayedAnimation(slideUp, 1800 + (index * 150)),
-    number: createDelayedAnimation(springScale, 2100 + (index * 150)),
-    label: createDelayedAnimation(slideUp, 2200 + (index * 150))
+export const createStatAnimation = (index, containerAnim = slideUp, numberAnim = springScale, labelAnim = slideUp) => ({
+    container: createDelayedAnimation(containerAnim, 1800 + (index * 150)),
+    number: createDelayedAnimation(numberAnim, 2100 + (index * 150)),
+    label: createDelayedAnimation(labelAnim, 2200 + (index * 150))
 })
 
 export const quickSlideUp = {
@@ -271,19 +271,19 @@ export const quickScaleIn = {
 
 export const presets = {
     hero: {
-        title: heroTitle,
-        subtitle: heroSubtitle,
-        description: heroDescription,
+        title: bottomToTop,
+        subtitle: centerScale,
+        description: bottomToTopDelayed,
         cta: {
-            ...heroCTA,
+            ...rightToLeft,
             ...hoverScale
         },
         search: {
-            ...heroSearch,
+            ...leftToRight,
             ...hoverGlow
         },
-        searchIcon: heroSearchIcon,
-        searchInput: heroSearchInput
+        searchIcon: rotateEntry,
+        searchInput: fadeEntry
     },
 
     card: {
@@ -322,5 +322,12 @@ export default {
     createDelayedAnimation,
     createStaggeredAnimation,
     createStatAnimation,
+    bottomToTop,
+    centerScale,
+    bottomToTopDelayed,
+    rightToLeft,
+    leftToRight,
+    rotateEntry,
+    fadeEntry,
     presets
 }

@@ -1,10 +1,15 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50">
-    <div class="flex justify-center p-5 border-b border-gray-200">
+    <div class="flex justify-center p-5 border-b bg-white border-gray-200">
       <div class="w-full max-w-[1300px]">
         <div class="flex items-center justify-between">
-          <RouterLink to="/" class="tracking-wider font-semibold">
-            WORDIFY
+          <RouterLink to="/" class="flex items-center gap-2">
+            <img 
+                :src="MainLogo"
+                alt="Logo Wordify"
+                class="w-[30px]"
+            >
+            <span class="font-semibold tracking-wide text-sm">WORDIFY</span>
           </RouterLink>
 
           <ul class="hidden md:flex items-center gap-5">
@@ -65,40 +70,41 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
-import { Menu, X, Home, User, BookOpen, Mail } from 'lucide-vue-next'
+  import { ref } from 'vue'
+  import { RouterLink } from 'vue-router'
+  import { Menu, X, Home, User, BookOpen, Mail } from 'lucide-vue-next'
+  import MainLogo from "../../assets/mainLogo.png"
 
-const isMobileMenuOpen = ref(false)
+  const isMobileMenuOpen = ref(false)
 
-const navItems = ref([
-  {
-    name: 'Home',
-    path: '/',
-    icon: Home
-  },
-  {
-    name: 'About',
-    path: '/about',
-    icon: User
-  },
-  {
-    name: 'Blog',
-    path: '/blog',
-    icon: BookOpen
-  },
-  {
-    name: 'Contact',
-    path: '/contact',
-    icon: Mail
+  const navItems = ref([
+    {
+      name: 'Home',
+      path: '/',
+      icon: Home
+    },
+    {
+      name: 'About',
+      path: '/about',
+      icon: User
+    },
+    {
+      name: 'Blog',
+      path: '/blog',
+      icon: BookOpen
+    },
+    {
+      name: 'Contact',
+      path: '/contact',
+      icon: Mail
+    }
+  ])
+
+  const toggleMobileMenu = () => {
+    isMobileMenuOpen.value = !isMobileMenuOpen.value
   }
-])
 
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
-}
-
-const closeMobileMenu = () => {
-  isMobileMenuOpen.value = false
-}
+  const closeMobileMenu = () => {
+    isMobileMenuOpen.value = false
+  }
 </script>
