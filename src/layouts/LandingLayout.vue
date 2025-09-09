@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <Navbar />
-    <main class="mt-[80px]">
+    <main class="flex-1 mt-[80px]">
       <router-view />
     </main>
     <MainFooter />
