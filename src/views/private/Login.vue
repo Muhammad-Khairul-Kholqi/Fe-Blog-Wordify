@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-    import MainLogo from "../assets/mainLogo.png";
+    import MainLogo from "../../assets/mainLogo.png";
     import { Mail, Lock, Eye, EyeOff } from "lucide-vue-next";
     import { ref } from "vue";
 
