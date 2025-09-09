@@ -1,168 +1,124 @@
 <template>
-  <div class="flex justify-center p-5">
-    <div class="w-full max-w-[1300px]">
-      <div class="bg-[#F0F0F0]/40 p-5 rounded-2xl">
-        <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-purple-500 rounded-full">
-                <Search class="w-5 h-5 text-white" />
-            </div>
-            <span class="text-xl font-semibold">Search Blog</span>
-        </div>
-        <p class="text-gray-600 mt-2">Search and read the blog you want</p>
+    <div class="flex justify-center p-5">
+        <div class="w-full max-w-[1300px]">
+            <div class="bg-[#F0F0F0]/40 p-5 rounded-2xl">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center justify-center w-10 h-10 bg-purple-500 rounded-full">
+                        <Search class="w-5 h-5 text-white" />
+                    </div>
+                    <span class="text-xl font-semibold">Search Blog</span>
+                </div>
+                <p class="text-gray-600 mt-2">Search and read the blog you want</p>
 
-        <div class="flex flex-col md:flex-row w-full items-center gap-3 mt-5">
-            <div class="flex items-center w-full md:max-w-[40%] bg-white rounded-lg px-4 py-2 border border-gray-200">
-                <Search class="w-5 h-5 text-gray-500 mr-2" />
-                <input
-                    type="text"
-                    v-model="searchQuery"
-                    placeholder="Search blog..."
-                    class="w-full outline-none bg-transparent text-gray-700"
-                />
-            </div>
-
-            <div class="relative w-full md:max-w-[20%]">
-                <button
-                    @click="toggleDropdown('category')"
-                    class="flex items-center justify-between w-full px-4 py-2 bg-white rounded-lg text-gray-700 border border-gray-200 cursor-pointer"
-                >
-                    <span>{{ selectedCategory }}</span>
-                    <ChevronDown
-                        class="w-5 h-5 transition-transform duration-300"
-                        :class="{ 'rotate-180': openDropdown === 'category' }"
-                    />
-                </button>
-                <div
-                    v-if="openDropdown === 'category'"
-                    class="absolute left-0 mt-2 w-full bg-white rounded-lg shadow z-10"
-                >
+                <div class="flex flex-col md:flex-row w-full items-center gap-3 mt-5">
                     <div
-                        v-for="cat in categories"
-                        :key="cat"
-                        @click="selectCategory(cat)"
-                        class="px-4 py-2 hover:bg-gray-100 rounded-lg cursor-pointer"
-                    >
-                    {{ cat }}
+                        class="flex items-center w-full md:max-w-[40%] bg-white rounded-lg px-4 py-2 border border-gray-200">
+                        <Search class="w-5 h-5 text-gray-500 mr-2" />
+                        <input type="text" v-model="searchQuery" placeholder="Search blog..."
+                            class="w-full outline-none bg-transparent text-gray-700" />
+                    </div>
+
+                    <div class="relative w-full md:max-w-[20%]">
+                        <button @click="toggleDropdown('category')"
+                            class="flex items-center justify-between w-full px-4 py-2 bg-white rounded-lg text-gray-700 border border-gray-200 cursor-pointer">
+                            <span>{{ selectedCategory }}</span>
+                            <ChevronDown class="w-5 h-5 transition-transform duration-300"
+                                :class="{ 'rotate-180': openDropdown === 'category' }" />
+                        </button>
+                        <div v-if="openDropdown === 'category'"
+                            class="absolute left-0 mt-2 w-full bg-white rounded-lg shadow z-10">
+                            <div v-for="cat in categories" :key="cat" @click="selectCategory(cat)"
+                                class="px-4 py-2 hover:bg-gray-100 rounded-lg cursor-pointer">
+                                {{ cat }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full md:max-w-[20%]">
+                        <button @click="toggleDropdown('sort')"
+                            class="flex items-center justify-between w-full px-4 py-2 bg-white rounded-lg border border-gray-200 cursor-pointer text-gray-700">
+                            <span>{{ selectedSort }}</span>
+                            <ChevronDown class="w-5 h-5 transition-transform duration-300"
+                                :class="{ 'rotate-180': openDropdown === 'sort' }" />
+                        </button>
+                        <div v-if="openDropdown === 'sort'"
+                            class="absolute left-0 mt-2 w-full bg-white rounded-lg shadow z-10">
+                            <div v-for="s in sortOptions" :key="s" @click="selectSort(s)"
+                                class="px-4 py-2 hover:bg-gray-100 rounded-lg cursor-pointer">
+                                {{ s }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button @click="resetFilters"
+                        class="w-full md:max-w-[20%] bg-purple-500 hover:bg-purple-600 text-white rounded-lg px-4 py-2 cursor-pointer">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div v-for="blog in paginatedBlogs" :key="blog.title" class="group cursor-pointer">
+                        <img :src="blog.image" :alt="blog.title"
+                            class="w-full h-[250px] object-cover rounded-xl group-hover:scale-105 duration-300">
+
+                        <div class="flex items-center gap-2 mt-3">
+                            <span class="text-gray-500 text-sm font-medium">{{ blog.category }}</span>
+                            <div class="bg-gray-500 text-sm p-0.5 mt-1 rounded-full"></div>
+                            <span class="text-gray-500 text-sm font-medium">{{ blog.readTime }} min read</span>
+                        </div>
+
+                        <h1 class="mt-3 text-xl font-semibold group-hover:underline duration-300 line-clamp-2">{{
+                            blog.title }}</h1>
+
+                        <p class="text-gray-500 font-medium mt-2 text-sm line-clamp-3">{{ blog.description }}</p>
+
+                        <div class="flex items-center gap-3 mt-3 text-gray-600">
+                            <div class="flex items-center gap-2">
+                                <User class="w-4 h-4" />
+                                <span class="font-medium text-sm">{{ blog.author }}</span>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <Calendar class="w-4 h-4" />
+                                <span class="font-medium text-sm">{{ blog.date }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="relative w-full md:max-w-[20%]">
-                <button
-                    @click="toggleDropdown('sort')"
-                    class="flex items-center justify-between w-full px-4 py-2 bg-white rounded-lg border border-gray-200 cursor-pointer text-gray-700"
-                >
-                    <span>{{ selectedSort }}</span>
-                    <ChevronDown
-                        class="w-5 h-5 transition-transform duration-300"
-                        :class="{ 'rotate-180': openDropdown === 'sort' }"
-                    />
+            <div class="flex justify-center items-center gap-2 mt-10">
+                <button @click="goToFirstPage" :disabled="currentPage === 1"
+                    class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                    Previous
                 </button>
-                <div
-                    v-if="openDropdown === 'sort'"
-                    class="absolute left-0 mt-2 w-full bg-white rounded-lg shadow z-10"
-                >
-                    <div
-                        v-for="s in sortOptions"
-                        :key="s"
-                        @click="selectSort(s)"
-                        class="px-4 py-2 hover:bg-gray-100 rounded-lg cursor-pointer"
-                    >
-                    {{ s }}
-                    </div>
-                </div>
-            </div>
 
-            <button
-                @click="resetFilters"
-                class="w-full md:max-w-[20%] bg-purple-500 hover:bg-purple-600 text-white rounded-lg px-4 py-2 cursor-pointer"
-            >
-                Reset
-            </button>
-        </div>
-      </div>
-
-      <div class="mt-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div 
-                v-for="blog in paginatedBlogs" 
-                :key="blog.title"
-                class="group cursor-pointer"
-            >
-                <img 
-                    :src="blog.image" 
-                    :alt="blog.title"
-                    class="w-full h-[250px] object-cover rounded-xl group-hover:scale-105 duration-300"
-                >
-
-                <div class="flex items-center gap-2 mt-3">
-                    <span class="text-purple-500 font-medium">{{ blog.category }}</span>
-                    <div class="bg-purple-500 p-1 rounded-full"></div>
-                    <span class="text-purple-500 font-medium">{{ blog.readTime }} min read</span>
-                </div>
-
-                <h1 class="mt-3 text-xl font-semibold group-hover:underline duration-300 line-clamp-2">{{ blog.title }}</h1>
-
-                <p class="text-gray-500 font-medium mt-2 text-sm line-clamp-3">{{ blog.description }}</p>
-
-                <div class="flex items-center gap-3 mt-3 text-gray-600">
-                    <div class="flex items-center gap-2">
-                        <User class="w-4 h-4" />
-                        <span class="font-medium text-sm">{{ blog.author }}</span>
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <Calendar class="w-4 h-4" />
-                        <span class="font-medium text-sm">{{ blog.date }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
-
-      <div class="flex justify-center items-center gap-2 mt-10">
-        <button 
-            @click="goToFirstPage"
-            :disabled="currentPage === 1"
-            class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-        >
-            Previous
-        </button>
-
-        <template v-for="item in paginationItems" :key="item">
-            <button 
-                v-if="item !== '...'"
-                @click="goToPage(item)"
-                :class="{
+                <template v-for="item in paginationItems" :key="item">
+                    <button v-if="item !== '...'" @click="goToPage(item)" :class="{
                     'bg-purple-500 text-white': item === currentPage,
                     'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50': item !== currentPage
-                }"
-                class="px-4 py-2 rounded-lg min-w-[40px] cursor-pointer"
-            >
-                {{ item }}
-            </button>
-            <span 
-                v-else
-                class="px-4 py-2 text-gray-500"
-            >
-                ...
-            </span>
-        </template>
+                }" class="px-4 py-2 rounded-lg min-w-[40px] cursor-pointer">
+                        {{ item }}
+                    </button>
+                    <span v-else class="px-4 py-2 text-gray-500">
+                        ...
+                    </span>
+                </template>
 
-        <button 
-            @click="goToLastPage"
-            :disabled="currentPage === totalPages"
-            class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-        >
-            Next
-        </button>
-      </div>
+                <button @click="goToLastPage" :disabled="currentPage === totalPages"
+                    class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                    Next
+                </button>
+            </div>
 
-      <div class="text-center text-gray-600 mt-4 text-sm">
-        Showing {{ startIndex + 1 }}-{{ Math.min(endIndex, filteredBlogs.length) }} of {{ filteredBlogs.length }} blogs
-      </div>
+            <div class="text-center text-gray-600 mt-4 text-sm">
+                Showing {{ startIndex + 1 }}-{{ Math.min(endIndex, filteredBlogs.length) }} of {{ filteredBlogs.length
+                }} blogs
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
