@@ -8,51 +8,42 @@
 
                         <div class="w-full flex justify-between flex-col lg:w-2/5">
                             <div class="block lg:text-left text-center">
-                                <h2 
-                                    v-motion="animation.createDelayedAnimation(animation.slideLeft, 100)"
-                                    class="text-4xl font-bold text-gray-900 leading-[3.25rem] mb-5"
-                                >
+                                <h2 v-motion="animation.createDelayedAnimation(animation.slideLeft, 100)"
+                                    class="text-4xl font-bold text-gray-900 leading-[3.25rem] mb-5">
                                     Our Popular <span class="text-purple-600">Blogs</span>
                                 </h2>
-                                <p 
-                                    v-motion="animation.createDelayedAnimation(animation.slideLeft, 250)"
-                                    class="text-gray-500 mb-10 max-lg:max-w-xl max-lg:mx-auto"
-                                >
+                                <p v-motion="animation.createDelayedAnimation(animation.slideLeft, 250)"
+                                    class="text-gray-500 mb-10 max-lg:max-w-xl max-lg:mx-auto">
                                     Discover our most popular blogs filled with insights, inspiration, and the latest
                                     trends loved by our readers.
                                 </p>
-                                <a 
-                                    v-motion="animation.createDelayedAnimation(animation.slideLeft, 350)"
+                                <RouterLink v-motion="animation.createDelayedAnimation(animation.slideLeft, 350)"
                                     to="/blog"
-                                    class="cursor-pointer border border-gray-200 rounded-full py-3.5 px-7 w-52 lg:mx-0 mx-auto flex justify-center text-gray-900 font-semibold transition-all duration-300 hover:bg-gray-50"
-                                >
+                                    class="cursor-pointer border border-gray-200 rounded-full py-3.5 px-7 w-52 lg:mx-0 mx-auto flex justify-center text-gray-900 font-semibold transition-all duration-300 hover:bg-gray-50">
                                     View All
-                                </a>
+                                </RouterLink>
                             </div>
 
                             <div class="flex items-center lg:justify-start justify-center lg:mt-0 mt-8 gap-8 mb-4">
-                                <button 
-                                    v-motion="animation.createDelayedAnimation(animation.slideUp, 450)"
+                                <button v-motion="animation.createDelayedAnimation(animation.slideUp, 450)"
                                     @click="prevSlide"
-                                    class="group flex justify-center items-center border border-solid border-indigo-600 w-11 h-11 transition-all duration-500 rounded-full hover:bg-indigo-600 cursor-pointer"
-                                >
+                                    class="group flex justify-center items-center border border-solid border-indigo-600 w-11 h-11 transition-all duration-500 rounded-full hover:bg-indigo-600 cursor-pointer">
                                     <ChevronLeft class="h-6 w-6 text-indigo-600 group-hover:text-white" />
                                 </button>
-                                <button 
-                                    v-motion="animation.createDelayedAnimation(animation.slideUp, 450)"
+                                <button v-motion="animation.createDelayedAnimation(animation.slideUp, 450)"
                                     @click="nextSlide"
-                                    class="group flex justify-center items-center border border-solid border-indigo-600 w-11 h-11 transition-all duration-500 rounded-full hover:bg-indigo-600 cursor-pointer"
-                                >
+                                    class="group flex justify-center items-center border border-solid border-indigo-600 w-11 h-11 transition-all duration-500 rounded-full hover:bg-indigo-600 cursor-pointer">
                                     <ChevronRight class="h-6 w-6 text-indigo-600 group-hover:text-white" />
                                 </button>
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-3/5" v-motion="animation.createDelayedAnimation(animation.slideRight, 1000)">
+                        <div class="w-full lg:w-3/5"
+                            v-motion="animation.createDelayedAnimation(animation.slideRight, 1000)">
                             <div class="relative overflow-hidden">
                                 <div class="flex transition-transform duration-500 ease-in-out"
                                     :style="{ transform: `translateX(-${currentSlide * slideWidth}%)` }">
-                                    <div v-for="(blog, index) in blogs" :key="index"
+                                    <RouterLink to="" v-for="(blog, index) in blogs" :key="index"
                                         :class="['flex-shrink-0 px-2 sm:px-4 group', slidesPerView === 1 ? 'w-full' : 'w-1/2']">
                                         <div class="flex items-center mb-5 relative">
                                             <img :src="blog.image" :alt="blog.alt"
@@ -83,12 +74,12 @@
                                         <p class="text-gray-500 leading-6 transition-all duration-500 mb-5">
                                             {{ blog.description }}
                                         </p>
-                                        <a to=""
+                                        <RouterLink to=""
                                             class="cursor-pointer flex items-center gap-2 text-indigo-700 font-semibold group">
                                             Read more
                                             <ArrowRight class="group-hover:translate-x-2 duration-300 w-5 h-5 mt-0.5" />
-                                        </a>
-                                    </div>
+                                        </RouterLink>
+                                    </RouterLink>
                                 </div>
                             </div>
                         </div>
@@ -104,6 +95,7 @@
     import { ref, onMounted, onUnmounted, computed } from 'vue'
     import { ChevronLeft, ChevronRight, Eye, ArrowRight } from 'lucide-vue-next'
     import * as animation from '../../molecules/animation'; 
+    import { RouterLink } from 'vue-router';
 
     const currentSlide = ref(0)
     const slidesPerView = ref(2)

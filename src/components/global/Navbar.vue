@@ -72,7 +72,7 @@
 <script setup>
   import { ref } from 'vue'
   import { RouterLink } from 'vue-router'
-  import { Menu, X, Home, User, BookOpen, Mail } from 'lucide-vue-next'
+  import { Menu, X, Home, User, BookOpen } from 'lucide-vue-next'
   import MainLogo from "../../assets/mainLogo.png"
 
   const isMobileMenuOpen = ref(false)
@@ -93,11 +93,6 @@
       path: '/blog',
       icon: BookOpen
     },
-    {
-      name: 'Contact',
-      path: '/contact',
-      icon: Mail
-    }
   ])
 
   const toggleMobileMenu = () => {
