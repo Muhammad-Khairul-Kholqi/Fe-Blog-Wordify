@@ -1,7 +1,7 @@
 <template>
-    <div class="flex justify-center p-5 mt-5">
+    <div class="flex justify-center px-5 py-10 mt-5">
         <div class="w-full max-w-[1300px]">
-            <section class="py-24">
+            <section>
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div
                         class="flex justify-center flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between gap-8">
@@ -51,7 +51,7 @@
                                             <div
                                                 class="absolute bottom-0 left-0 bg-white rounded-tr-lg px-2 py-1 flex items-center gap-1">
                                                 <div class="flex items-center gap-3">
-                                                    <div class="flex items-center gap-2">
+                                                    <div class="flex items-center gap-1">
                                                         <Eye class="w-4 h-4 text-gray-600" />
                                                         <span
                                                             class="text-sm text-gray-600 font-medium">{{blog.views}}</span>
@@ -59,8 +59,8 @@
 
                                                     <span class="text-gray-600">|</span>
 
-                                                    <div class="flex items-center gap-2">
-                                                        <Eye class="w-4 h-4 text-gray-600" />
+                                                    <div class="flex items-center gap-1">
+                                                        <Heart class="w-4 h-4 text-gray-600" />
                                                         <span class="text-sm text-gray-600 font-medium">{{ blog.likes
                                                             }}</span>
                                                     </div>
@@ -93,7 +93,7 @@
 
 <script setup>
     import { ref, onMounted, onUnmounted, computed } from 'vue'
-    import { ChevronLeft, ChevronRight, Eye, ArrowRight } from 'lucide-vue-next'
+    import { ChevronLeft, ChevronRight, Eye, ArrowRight, Heart } from 'lucide-vue-next'
     import * as animation from '../../molecules/animation'; 
     import { RouterLink } from 'vue-router';
 

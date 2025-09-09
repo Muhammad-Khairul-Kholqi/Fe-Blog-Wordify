@@ -1,7 +1,7 @@
 <template>
-    <HeroSection />
-    <AboutSection />
-    <BlogPopularSection />
+    <HeroSection id="home" />
+    <AboutSection id="about" />
+    <BlogPopularSection id="popular" />
 </template>
 
 <script setup>
