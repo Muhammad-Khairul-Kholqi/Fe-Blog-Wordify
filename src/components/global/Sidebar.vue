@@ -25,13 +25,20 @@
                 </a>
             </RouterLink>
         </nav>
+
+        <div class="p-4">
+            <button class="flex w-full items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-gray-100 text-red-600 cursor-pointer">
+                <LogOut class="w-4 h-4" />
+                <span>Log Out</span>
+            </button>
+        </div>
     </aside>
 </template>
 
 
 <script setup>
     import { RouterLink } from "vue-router"
-    import { X, LayoutDashboard, Users, Settings } from "lucide-vue-next"
+    import { X, LayoutDashboard, Newspaper, Layers2, LogOut } from "lucide-vue-next"
     import MainLogo from "../../assets/mainLogo.png";
 
     defineProps({
@@ -40,7 +47,7 @@
 
     const menus = [
         { name: "Dashboard", icon: LayoutDashboard, to: "/private/page/admin/dashboard" },
-        { name: "Users", icon: Users, to: "/private/page/admin/users" },
-        { name: "Settings", icon: Settings, to: "/private/page/admin/settings" },
+        { name: "Categories", icon: Layers2, to: "/private/page/admin/users" },
+        { name: "Articles", icon: Newspaper, to: "/private/page/admin/settings" },
     ]
 </script>
