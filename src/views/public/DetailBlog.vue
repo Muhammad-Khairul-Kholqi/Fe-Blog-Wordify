@@ -13,6 +13,6 @@
 </template>
 
 <script setup>
-    import Description from '../../components/sections/DetailBlog/Description.vue';
-    import RelatedTopic from '../../components/sections/DetailBlog/RelatedTopic.vue';
+    import Description from '../../components/sections/detailBlog/Description.vue';
+    import RelatedTopic from '../../components/sections/detailBlog/RelatedTopic.vue';
 </script>
