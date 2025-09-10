@@ -1,6 +1,6 @@
 <template>
     <aside :class="[
-        'fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200',
+        'fixed inset-y-0 left-0 z-40 w-60 bg-white border-r border-gray-200 transform transition-transform duration-200',
         open ? 'translate-x-0' : '-translate-x-full',
         'md:translate-x-0 md:static md:shadow-none'
     ]">
@@ -15,32 +15,19 @@
         </div>
 
         <nav class="p-4 space-y-2 border-b border-gray-200">
-            <RouterLink to="/private/page/admin/dashboard"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100">
-                <LayoutDashboard class="w-4 h-4" />
-                <span>Dashboard</span>
-            </RouterLink>
-            <RouterLink to="/private/page/admin/users"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100">
-                <Users class="w-4 h-4" />
-                <span>Users</span>
-            </RouterLink>
-            <RouterLink to="/private/page/admin/settings"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100">
-                <Settings class="w-4 h-4" />
-                <span>Settings</span>
+            <RouterLink v-for="menu in menus" :key="menu.to" :to="menu.to" custom v-slot="{ href, navigate, isActive }">
+                <a :href="href" @click="navigate" :class="[
+                    'flex items-center gap-3 px-3 py-2 rounded-lg transition-colors',
+                    isActive ? 'bg-purple-500 text-white' : 'hover:bg-gray-100'
+                ]">
+                    <component :is="menu.icon" class="w-4 h-4" />
+                    <span>{{ menu.name }}</span>
+                </a>
             </RouterLink>
         </nav>
-
-        <div class="p-4">
-            <RouterLink to="/private/page/admin/settings"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100">
-                <Settings class="w-4 h-4" />
-                <span>Settings</span>
-            </RouterLink>
-        </div>
     </aside>
 </template>
+
 
 <script setup>
     import { RouterLink } from "vue-router"
@@ -50,4 +37,10 @@
     defineProps({
         open: { type: Boolean, required: true }
     })
+
+    const menus = [
+        { name: "Dashboard", icon: LayoutDashboard, to: "/private/page/admin/dashboard" },
+        { name: "Users", icon: Users, to: "/private/page/admin/users" },
+        { name: "Settings", icon: Settings, to: "/private/page/admin/settings" },
+    ]
 </script>

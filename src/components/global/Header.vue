@@ -4,7 +4,9 @@
             <Menu class="w-6 h-6" />
         </button>
 
-        <h1 class="text-lg font-semibold">Welcome back</h1>
+        <h1 class="text-lg font-semibold">
+            {{ route.meta.title }}
+        </h1>
 
         <RouterLink to="" class="flex items-center gap-2 text-gray-600 hover:bg-gray-100 p-2 rounded-md">
             <User class="w-5 h-5" />
@@ -14,6 +16,8 @@
 </template>
 
 <script setup>
-    import { Menu, User } from "lucide-vue-next"
-    import { RouterLink } from "vue-router";
+import { Menu, User } from "lucide-vue-next"
+import { RouterLink, useRoute } from "vue-router"
+
+const route = useRoute()
 </script>
