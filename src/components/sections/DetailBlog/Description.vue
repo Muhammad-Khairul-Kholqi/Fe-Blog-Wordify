@@ -50,5 +50,5 @@
 </template>
 
 <script setup>
-    import { Eye, Heart } from 'lucide-vue-next';
+import { Eye, Heart } from 'lucide-vue-next';
 </script>
