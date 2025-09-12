@@ -27,27 +27,47 @@
         </nav>
 
         <div class="p-4">
-            <button class="flex w-full items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-gray-100 text-red-600 cursor-pointer">
-                <LogOut class="w-4 h-4" />
-                <span>Log Out</span>
+            <button @click="handleLogout" :disabled="isLoggingOut"
+                class="flex w-full items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-gray-100 text-red-600 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
+                <div v-if="isLoggingOut"
+                    class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+                <LogOut v-else class="w-4 h-4" />
+                <span>{{ isLoggingOut ? 'Logging Out...' : 'Log Out' }}</span>
             </button>
         </div>
     </aside>
 </template>
 
-
 <script setup>
-    import { RouterLink } from "vue-router"
-    import { X, LayoutDashboard, Newspaper, Layers2, LogOut } from "lucide-vue-next"
-    import MainLogo from "../../assets/mainLogo.png";
+import { RouterLink } from "vue-router"
+import { X, LayoutDashboard, Newspaper, Layers2, LogOut } from "lucide-vue-next"
+import MainLogo from "../../assets/mainLogo.png";
+import { ref } from "vue";
+import AuthApi from "../../api/authApi";
 
-    defineProps({
-        open: { type: Boolean, required: true }
-    })
+defineProps({
+    open: { type: Boolean, required: true }
+})
 
-    const menus = [
-        { name: "Dashboard", icon: LayoutDashboard, to: "/private/page/admin/dashboard" },
-        { name: "Categories", icon: Layers2, to: "/private/page/admin/users" },
-        { name: "Articles", icon: Newspaper, to: "/private/page/admin/settings" },
-    ]
+const isLoggingOut = ref(false);
+
+const menus = [
+    { name: "Dashboard", icon: LayoutDashboard, to: "/private/page/admin/dashboard" },
+    { name: "Categories", icon: Layers2, to: "/private/page/admin/users" },
+    { name: "Articles", icon: Newspaper, to: "/private/page/admin/settings" },
+]
+
+const handleLogout = async () => {
+    if (isLoggingOut.value) return;
+
+    isLoggingOut.value = true;
+
+    try {
+        await AuthApi.logout();
+    } catch (error) {
+        console.error('Logout error:', error);
+    } finally {
+        isLoggingOut.value = false;
+    }
+};
 </script>

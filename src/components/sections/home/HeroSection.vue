@@ -107,7 +107,7 @@
             value: 75,
             targetValue: "75",
             displayValue: "0",
-            label: "BLOGS"
+            label: "ARTICLES"
         },
         {
             value: 100000,

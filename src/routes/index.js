@@ -2,6 +2,7 @@ import {
     createRouter,
     createWebHistory
 } from "vue-router"
+import AuthApi from "../api/authApi"
 
 import LandingLayout from "../layouts/LandingLayout.vue"
 import AdminLayout from "../layouts/AdminLayout.vue"
@@ -43,26 +44,59 @@ const routes = [{
         path: "/private/page/login",
         component: Login,
         meta: {
-            title: "Login"
+            title: "Login",
+            guest: true 
         },
     },
     {
         path: "/private/page/admin",
         component: AdminLayout,
+        meta: {
+            requiresAuth: true 
+        },
         children: [{
             path: "dashboard",
             component: Dashboard,
             meta: {
-                title: "Dashboard"
+                title: "Dashboard",
+                requiresAuth: true
             },
         }, ],
     },
+    {
+        path: "/private/page/admin/",
+        redirect: "/private/page/admin/dashboard"
+    }
 ]
-
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = AuthApi.isAuthenticated()
+
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!isAuthenticated) {
+            next({
+                path: '/private/page/login',
+                query: {
+                    redirect: to.fullPath
+                } 
+            })
+            return
+        }
+    }
+
+    if (to.matched.some(record => record.meta.guest)) {
+        if (isAuthenticated) {
+            next('/private/page/admin/dashboard')
+            return
+        }
+    }
+
+    next()
 })
 
 router.afterEach((to) => {
