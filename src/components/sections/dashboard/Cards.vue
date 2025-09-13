@@ -1,5 +1,5 @@
 <template>
-    <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 items-center gap-3">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 items-center gap-3">
         <div v-for="card in cards" :key="card.title" class="border border-gray-200 p-5 rounded-xl">
             <div class="flex justify-between items-center">
                 <h1 class="font-semibold text-gray-600">{{ card.title }}</h1>

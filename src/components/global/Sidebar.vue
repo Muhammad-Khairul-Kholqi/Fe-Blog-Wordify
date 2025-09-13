@@ -1,6 +1,6 @@
 <template>
     <aside :class="[
-        'fixed inset-y-0 left-0 z-40 w-60 bg-white border-r border-gray-200 transform transition-transform duration-200',
+        'fixed inset-y-0 left-0 z-[40] w-60 bg-white border-r border-gray-200 transform transition-transform duration-200',
         open ? 'translate-x-0' : '-translate-x-full',
         'md:translate-x-0 md:static md:shadow-none'
     ]">
@@ -53,7 +53,7 @@ const isLoggingOut = ref(false);
 
 const menus = [
     { name: "Dashboard", icon: LayoutDashboard, to: "/private/page/admin/dashboard" },
-    { name: "Categories", icon: Layers2, to: "/private/page/admin/users" },
+    { name: "Categories", icon: Layers2, to: "/private/page/admin/categories" },
     { name: "Articles", icon: Newspaper, to: "/private/page/admin/settings" },
 ]
 

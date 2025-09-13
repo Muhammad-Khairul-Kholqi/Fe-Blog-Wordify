@@ -8,7 +8,7 @@
             {{ route.meta.title }}
         </h1>
 
-        <RouterLink to="" class="flex items-center gap-2 text-gray-600 hover:bg-gray-100 p-2 rounded-md">
+        <RouterLink to="/private/page/admin/profile" class="flex items-center gap-2 text-gray-600 hover:bg-gray-100 p-2 rounded-md">
             <User class="w-5 h-5" />
             <span class="hidden sm:inline">Profile</span>
         </RouterLink>

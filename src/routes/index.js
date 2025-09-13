@@ -13,6 +13,8 @@ import DetailBlog from "../views/public/DetailBlog.vue"
 
 import Login from "../views/private/Login.vue"
 import Dashboard from "../views/private/admin/Dashboard.vue"
+import Profile from "../views/private/admin/Profile.vue"
+import Categories from "../views/private/admin/Categories.vue"
 
 const routes = [{
         path: "/",
@@ -52,16 +54,34 @@ const routes = [{
         path: "/private/page/admin",
         component: AdminLayout,
         meta: {
-            requiresAuth: true 
+            requiresAuth: true
         },
-        children: [{
-            path: "dashboard",
-            component: Dashboard,
-            meta: {
-                title: "Dashboard",
-                requiresAuth: true
+        children: [
+            {
+                path: "dashboard",
+                component: Dashboard,
+                meta: {
+                    title: "Dashboard",
+                    requiresAuth: true
+                },
             },
-        }, ],
+            {
+                path: "profile",
+                component: Profile,
+                meta: {
+                    title: "Profile Settings",
+                    requiresAuth: true
+                }
+            },
+            {
+                path: "categories",
+                component: Categories,
+                met: {
+                    title: Categories,
+                    requiresAuth: true
+                }
+            }
+        ],
     },
     {
         path: "/private/page/admin/",
